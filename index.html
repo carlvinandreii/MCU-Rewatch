@@ -379,13 +379,42 @@
         progressCount.innerText = checkedCount;
         totalCount.innerText = movieCheckboxes.length;
 
-        // AGGIORNAMENTO AUTOMATICO DELLE CASELLE DI FASE
+        // 1. AGGIORNAMENTO AUTOMATICO DELLE SERIE (Se spunti tutti gli episodi)
+        document.querySelectorAll('.category li').forEach((liItem) => {
+          const seriesMainCheckbox = liItem.querySelector(':scope > .movie-item input[type="checkbox"]');
+          const episodeCheckboxes = liItem.querySelectorAll('.episodes input[type="checkbox"]');
+          
+          if (seriesMainCheckbox && episodeCheckboxes.length > 0) {
+            const allEpisodesChecked = Array.from(episodeCheckboxes).every((cb) => cb.checked);
+            seriesMainCheckbox.checked = allEpisodesChecked;
+            
+            // Gestisce anche lo stile barrato del titolo della serie
+            const seriesLabel = seriesMainCheckbox.parentElement;
+            if (allEpisodesChecked) {
+              seriesLabel.classList.add("checked-text");
+            } else {
+              seriesLabel.classList.remove("checked-text");
+            }
+          }
+        });
+
+        // 2. AGGIORNAMENTO AUTOMATICO DELLE CASELLE DI FASE
         document.querySelectorAll(".category").forEach((categoryDiv) => {
           const phaseCb = categoryDiv.querySelector(".check-phase");
           if (!phaseCb) return;
           
-          const moviesInPhase = categoryDiv.querySelectorAll('.movie-list input[type="checkbox"]');
+          const moviesInPhase = categoryDiv.querySelectorAll('.movie-list > li > .movie-item input[type="checkbox"]');
           if (moviesInPhase.length === 0) return;
+
+          const allChecked = Array.from(moviesInPhase).every((cb) => cb.checked);
+          phaseCb.checked = allChecked;
+        });
+
+        // 3. AGGIORNAMENTO DEL MASTER "SELEZIONA TUTTO"
+        if (globalCheckbox) {
+          globalCheckbox.checked = movieCheckboxes.length > 0 && Array.from(movieCheckboxes).every((cb) => cb.checked);
+        }
+      }
 
           // Controlla se sono TUTTI spuntati i film di questa fase
           const allChecked = Array.from(moviesInPhase).every((cb) => cb.checked);

@@ -808,23 +808,25 @@
         });
       }
 
+      // Gestione caselle di Fase aggiornata e funzionante
       phaseCheckboxes.forEach((phaseCb) => {
         phaseCb.addEventListener("change", (e) => {
           const isChecked = e.target.checked;
           const categoryDiv = e.target.closest(".category");
-          const phaseCheckboxesList = categoryDiv.querySelectorAll(
-            'input[type="checkbox"]:not(.check-phase)',
+
+          // Seleziona tutte le checkbox dei film e delle serie all'interno di questa specifica fase
+          const itemsInPhase = categoryDiv.querySelectorAll(
+            '.movie-list input[type="checkbox"]',
           );
 
-          phaseCheckboxesList.forEach((cb) => {
+          itemsInPhase.forEach((cb) => {
             cb.checked = isChecked;
             localStorage.setItem(cb.id, isChecked);
           });
+
           updateProgress();
         });
       });
-
-      updateProgress();
     </script>
   </body>
 </html>

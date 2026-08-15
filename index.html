@@ -766,7 +766,6 @@
             (cb) => cb.checked,
           );
           phaseCb.checked = allPhaseChecked;
-          localStorage.setItem(phaseCb.id, allPhaseChecked);
         });
 
         if (globalCheckbox) {
@@ -809,8 +808,10 @@
         globalCheckbox.addEventListener("change", (e) => {
           const isChecked = e.target.checked;
           allCheckboxes.forEach((cb) => {
-            cb.checked = isChecked;
-            localStorage.setItem(cb.id, isChecked);
+            if (!cb.classList.contains("check-phase")) {
+              cb.checked = isChecked;
+              localStorage.setItem(cb.id, isChecked);
+            }
           });
           phaseCheckboxes.forEach((pcb) => {
             pcb.checked = isChecked;
@@ -821,9 +822,10 @@
       }
 
       phaseCheckboxes.forEach((phaseCb) => {
-        phaseCb.addEventListener("change", (e) => {
-          const isChecked = e.target.checked;
-          const categoryDiv = e.target.closest(".category");
+        phaseCb.addEventListener("click", (e) => {
+          // Forza l'azione direttamente basandosi sullo stato attuale del click
+          const isChecked = phaseCb.checked;
+          const categoryDiv = phaseCb.closest(".category");
           const phaseCheckboxesList = categoryDiv.querySelectorAll(
             '.movie-list input[type="checkbox"]',
           );

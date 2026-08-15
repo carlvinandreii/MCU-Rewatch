@@ -158,16 +158,20 @@
           <div class="progress-fill" id="progress-fill"></div>
         </div>
         <div class="global-controls">
-          <label style="cursor: pointer; font-weight: 600; color: #e23636">
+          <label
+            style="
+              cursor: pointer;
+              font-weight: 600;
+              color: #e23636;
+              display: inline-flex;
+              align-items: center;
+              width: auto;
+            "
+          >
             <input
               type="checkbox"
               id="check-all"
-              style="
-                width: 18px;
-                height: 18px;
-                vertical-align: middle;
-                margin-right: 8px;
-              "
+              style="width: 18px; height: 18px; margin-right: 8px"
             />
             Azzera / Seleziona Tutto
           </label>
@@ -179,7 +183,9 @@
         <div class="category">
           <div class="category-header">
             <h2>Fase 1: L'Inizio</h2>
-            <label><input type="checkbox" class="check-phase" /></label>
+            <label style="width: auto; margin: 0"
+              ><input type="checkbox" id="phase-1" class="check-phase"
+            /></label>
           </div>
           <ul class="movie-list">
             <li>
@@ -231,7 +237,9 @@
         <div class="category">
           <div class="category-header">
             <h2>Fase 2</h2>
-            <label><input type="checkbox" class="check-phase" /></label>
+            <label style="width: auto; margin: 0"
+              ><input type="checkbox" id="phase-2" class="check-phase"
+            /></label>
           </div>
           <ul class="movie-list">
             <li>
@@ -286,7 +294,9 @@
         <div class="category">
           <div class="category-header">
             <h2>Fase 3: Verso Endgame</h2>
-            <label><input type="checkbox" class="check-phase" /></label>
+            <label style="width: auto; margin: 0"
+              ><input type="checkbox" id="phase-3" class="check-phase"
+            /></label>
           </div>
           <ul class="movie-list">
             <li>
@@ -384,7 +394,9 @@
         <div class="category">
           <div class="category-header">
             <h2>Fase 4: Il Multiverso</h2>
-            <label><input type="checkbox" class="check-phase" /></label>
+            <label style="width: auto; margin: 0"
+              ><input type="checkbox" id="phase-4" class="check-phase"
+            /></label>
           </div>
           <ul class="movie-list">
             <li>
@@ -527,7 +539,9 @@
         <div class="category">
           <div class="category-header">
             <h2>Fase 5: Dinastia Quantica</h2>
-            <label><input type="checkbox" class="check-phase" /></label>
+            <label style="width: auto; margin: 0"
+              ><input type="checkbox" id="phase-5" class="check-phase"
+            /></label>
           </div>
           <ul class="movie-list">
             <li>
@@ -626,7 +640,9 @@
         <div class="category">
           <div class="category-header">
             <h2>Universo Multiverso (Fox/Sony)</h2>
-            <label><input type="checkbox" class="check-phase" /></label>
+            <label style="width: auto; margin: 0"
+              ><input type="checkbox" id="phase-6" class="check-phase"
+            /></label>
           </div>
           <ul class="movie-list">
             <li>
@@ -750,6 +766,7 @@
             (cb) => cb.checked,
           );
           phaseCb.checked = allPhaseChecked;
+          localStorage.setItem(phaseCb.id, allPhaseChecked);
         });
 
         if (globalCheckbox) {
@@ -795,7 +812,10 @@
             cb.checked = isChecked;
             localStorage.setItem(cb.id, isChecked);
           });
-          phaseCheckboxes.forEach((pcb) => (pcb.checked = isChecked));
+          phaseCheckboxes.forEach((pcb) => {
+            pcb.checked = isChecked;
+            localStorage.setItem(pcb.id, isChecked);
+          });
           updateProgress();
         });
       }
@@ -812,6 +832,8 @@
             cb.checked = isChecked;
             localStorage.setItem(cb.id, isChecked);
           });
+
+          localStorage.setItem(phaseCb.id, isChecked);
           updateProgress();
         });
       });

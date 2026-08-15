@@ -21,7 +21,7 @@
       }
 
      .container {
-        max-width: 1400px; /* Spazio ampio e naturale per la griglia */
+        max-width: 1400px; /* Allarghiamo ancora di più il contenitore per sfruttare tutto lo spazio in larghezza */
         margin: 0 auto;
       }
 
@@ -378,8 +378,25 @@
 
         progressCount.innerText = checkedCount;
         totalCount.innerText = movieCheckboxes.length;
-      }
 
+        // AGGIORNAMENTO AUTOMATICO DELLE CASELLE DI FASE
+        document.querySelectorAll(".category").forEach((categoryDiv) => {
+          const phaseCb = categoryDiv.querySelector(".check-phase");
+          if (!phaseCb) return;
+          
+          const moviesInPhase = categoryDiv.querySelectorAll('.movie-list input[type="checkbox"]');
+          if (moviesInPhase.length === 0) return;
+
+          // Controlla se sono TUTTI spuntati i film di questa fase
+          const allChecked = Array.from(moviesInPhase).every((cb) => cb.checked);
+          phaseCb.checked = allChecked;
+        });
+
+        // Controlla se sono TUTTI i film del sito spuntati per il master "Seleziona Tutto"
+        if (globalCheckbox) {
+          globalCheckbox.checked = movieCheckboxes.length > 0 && Array.from(movieCheckboxes).every((cb) => cb.checked);
+        }
+      }
       // Carica e salva lo stato delle checkbox
       movieCheckboxes.forEach((checkbox) => {
         const savedState = localStorage.getItem(checkbox.id);

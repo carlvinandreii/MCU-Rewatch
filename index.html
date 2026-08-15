@@ -679,12 +679,8 @@
     </div>
 
     <script>
-      // Seleziona solo gli elementi foglia effettivi da contare (film singoli + singoli episodi delle serie)
       const contentCheckboxes = document.querySelectorAll(
         '.category .movie-list > li > .movie-item input[type="checkbox"]:not(:has(+ details)), .category .movie-list > li:not(:has(.movie-item)) input[type="checkbox"], .category .episodes input[type="checkbox"]',
-      );
-      const seriesCheckboxes = document.querySelectorAll(
-        '.category .movie-list > li > .movie-item input[type="checkbox"]:has(~ details)',
       );
       const phaseCheckboxes = document.querySelectorAll(".check-phase");
       const globalCheckbox = document.getElementById("check-all");
@@ -694,7 +690,6 @@
       const progressCount = document.getElementById("progress-count");
       const totalCount = document.getElementById("total-count");
 
-      // Unisce tutto per il salvataggio su localStorage e gestione eventi
       const allCheckboxes = document.querySelectorAll(
         '.category input[type="checkbox"]',
       );
@@ -721,7 +716,6 @@
         progressCount.innerText = checkedCount;
         totalCount.innerText = totalItems;
 
-        // Sincronizzazione Serie -> Episodi
         document.querySelectorAll(".category li").forEach((liItem) => {
           const seriesCb = liItem.querySelector(
             ':scope > .movie-item input[type="checkbox"]',
@@ -743,13 +737,12 @@
           }
         });
 
-        // Sincronizzazione Fasi
         document.querySelectorAll(".category").forEach((categoryDiv) => {
           const phaseCb = categoryDiv.querySelector(".check-phase");
           if (!phaseCb) return;
 
           const phaseItems = categoryDiv.querySelectorAll(
-            '.movie-list > li > .movie-item input[type="checkbox"], .movie-list > li > label > input[type="checkbox"]',
+            '.movie-list input[type="checkbox"]',
           );
           if (phaseItems.length === 0) return;
 
@@ -759,7 +752,6 @@
           phaseCb.checked = allPhaseChecked;
         });
 
-        // Master Seleziona Tutto
         if (globalCheckbox) {
           const allLeafsChecked = Array.from(contentCheckboxes).every(
             (cb) => cb.checked,
@@ -808,25 +800,23 @@
         });
       }
 
-      // Gestione caselle di Fase aggiornata e funzionante
       phaseCheckboxes.forEach((phaseCb) => {
         phaseCb.addEventListener("change", (e) => {
           const isChecked = e.target.checked;
           const categoryDiv = e.target.closest(".category");
-
-          // Seleziona tutte le checkbox dei film e delle serie all'interno di questa specifica fase
-          const itemsInPhase = categoryDiv.querySelectorAll(
+          const phaseCheckboxesList = categoryDiv.querySelectorAll(
             '.movie-list input[type="checkbox"]',
           );
 
-          itemsInPhase.forEach((cb) => {
+          phaseCheckboxesList.forEach((cb) => {
             cb.checked = isChecked;
             localStorage.setItem(cb.id, isChecked);
           });
-
           updateProgress();
         });
       });
+
+      updateProgress();
     </script>
   </body>
 </html>

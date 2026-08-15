@@ -136,28 +136,63 @@
         padding: 3px 0;
         border-bottom: none;
       }
+      /* Stile per il pannello di progresso e controlli su mobile */
+      .top-dashboard {
+        background-color: #1e293b;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        border: 1px solid #334155;
+        text-align: center;
+      }
+      
+      .progress-bar {
+        background-color: #0f172a;
+        border-radius: 10px;
+        height: 14px;
+        width: 100%;
+        margin: 15px 0;
+        overflow: hidden;
+        border: 1px solid #334155;
+      }
+
+      .progress-fill {
+        background-color: #e23636;
+        height: 100%;
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+
+      .progress-text {
+        font-size: 1.1em;
+        font-weight: 600;
+      }
+
+      .global-controls {
+        margin-top: 15px;
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <h1>Road to Avengers: Doomsday</h1>
 
-      <div class="progress-text">
-        Progresso Rewatch: <span id="progress-percentage">0</span>% (<span
-          id="progress-count"
-          >0</span
-        >
-        di <span id="total-count">0</span> completati)
-      </div>
+      <!-- PANNELLO SUPERIORE (VISIBILE PERFETTO ANCHE DA TELEFONO) -->
+      <div class="top-dashboard">
+        <div class="progress-text">
+          Progresso Rewatch: <span id="progress-percentage">0</span>% (<span id="progress-count">0</span> di <span id="total-count">0</span> completati)
+        </div>
 
-      <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill"></div>
-      </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
 
-      <div class="global-controls">
-        <label class="btn-check-all">
-          <input type="checkbox" id="check-all" /> Azzera / Seleziona Tutto
-        </label>
+        <div class="global-controls">
+          <label class="btn-check-all" style="cursor: pointer; font-weight: 600; color: #e23636;">
+            <input type="checkbox" id="check-all" style="width: 18px; height: 18px; vertical-align: middle; margin-right: 8px;"> Azzera / Seleziona Tutto
+          </label>
+        </div>
       </div>
 
      <!-- GRIGLIA CHE METTE I RIQUADRI AFFIANCATI -->

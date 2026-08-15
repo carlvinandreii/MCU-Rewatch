@@ -415,17 +415,6 @@
           globalCheckbox.checked = movieCheckboxes.length > 0 && Array.from(movieCheckboxes).every((cb) => cb.checked);
         }
       }
-
-          // Controlla se sono TUTTI spuntati i film di questa fase
-          const allChecked = Array.from(moviesInPhase).every((cb) => cb.checked);
-          phaseCb.checked = allChecked;
-        });
-
-        // Controlla se sono TUTTI i film del sito spuntati per il master "Seleziona Tutto"
-        if (globalCheckbox) {
-          globalCheckbox.checked = movieCheckboxes.length > 0 && Array.from(movieCheckboxes).every((cb) => cb.checked);
-        }
-      }
       // Carica e salva lo stato delle checkbox
       movieCheckboxes.forEach((checkbox) => {
         const savedState = localStorage.getItem(checkbox.id);

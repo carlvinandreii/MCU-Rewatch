@@ -1219,12 +1219,14 @@
         showMainSite();
       });
 
-      // -------------------------------------------------
-      // SCRIPT ORIGINALE DEL TRACKER
-      // -------------------------------------------------
-      const contentCheckboxes = document.querySelectorAll(
-        '.category .movie-list > li > .movie-item input[type="checkbox"]:not(:has(+ details)), .category .movie-list > li:not(:has(.movie-item)) input[type="checkbox"], .category .episodes input[type="checkbox"]',
+      // GESTIONE PROGRESSO (FILM + SERIE INTERE COME UNICO ELEMENTO)
+      const movieCheckboxes = document.querySelectorAll(
+        '.category .movie-list > li:not(:has(.episodes)) input[type="checkbox"]',
       );
+      const seriesListItems = document.querySelectorAll(
+        ".category .movie-list > li:has(.episodes)",
+      );
+
       const phaseCheckboxes = document.querySelectorAll(".check-phase");
       const globalCheckbox = document.getElementById("check-all");
 
@@ -1238,9 +1240,12 @@
       );
 
       function updateProgress() {
+        let totalItems = 0;
         let checkedCount = 0;
 
-        contentCheckboxes.forEach((checkbox) => {
+        // 1. Contiamo i film singoli
+        movieCheckboxes.forEach((checkbox) => {
+          totalItems++;
           const parentLabel = checkbox.closest("label");
           if (checkbox.checked) {
             checkedCount++;
@@ -1250,7 +1255,32 @@
           }
         });
 
-        const totalItems = contentCheckboxes.length;
+        // 2. Contiamo le serie TV (1 serie = 1 elemento totale, completata solo se tutti gli episodi sono spuntati)
+        seriesListItems.forEach((liItem) => {
+          totalItems++;
+          const seriesCb = liItem.querySelector(
+            ':scope > .movie-item input[type="checkbox"]',
+          );
+          const episodeCbs = liItem.querySelectorAll(
+            '.episodes input[type="checkbox"]',
+          );
+          const seriesLabel = seriesCb ? seriesCb.closest("label") : null;
+
+          const allEpChecked = Array.from(episodeCbs).every((cb) => cb.checked);
+
+          if (seriesCb) {
+            seriesCb.checked = allEpChecked;
+          }
+
+          if (allEpChecked) {
+            checkedCount++;
+            if (seriesLabel) seriesLabel.classList.add("checked-text");
+          } else {
+            if (seriesLabel) seriesLabel.classList.remove("checked-text");
+          }
+        });
+
+        // Calcolo della percentuale
         const percentage =
           totalItems === 0 ? 0 : Math.round((checkedCount / totalItems) * 100);
 
@@ -1259,33 +1289,13 @@
         progressCount.innerText = checkedCount;
         totalCount.innerText = totalItems;
 
-        document.querySelectorAll(".category li").forEach((liItem) => {
-          const seriesCb = liItem.querySelector(
-            ':scope > .movie-item input[type="checkbox"]',
-          );
-          const episodeCbs = liItem.querySelectorAll(
-            '.episodes input[type="checkbox"]',
-          );
-
-          if (seriesCb && episodeCbs.length > 0) {
-            const allEpChecked = Array.from(episodeCbs).every(
-              (cb) => cb.checked,
-            );
-            seriesCb.checked = allEpChecked;
-            const seriesLabel = seriesCb.closest("label");
-            if (seriesLabel) {
-              if (allEpChecked) seriesLabel.classList.add("checked-text");
-              else seriesLabel.classList.remove("checked-text");
-            }
-          }
-        });
-
+        // Gestione delle fasi generali
         document.querySelectorAll(".category").forEach((categoryDiv) => {
           const phaseCb = categoryDiv.querySelector(".check-phase");
           if (!phaseCb) return;
 
           const phaseItems = categoryDiv.querySelectorAll(
-            '.movie-list input[type="checkbox"]',
+            '.movie-list > li > .movie-item input[type="checkbox"]',
           );
           if (phaseItems.length === 0) return;
 
@@ -1294,15 +1304,9 @@
           );
           phaseCb.checked = allPhaseChecked;
         });
-
-        if (globalCheckbox) {
-          const allLeafsChecked = Array.from(contentCheckboxes).every(
-            (cb) => cb.checked,
-          );
-          globalCheckbox.checked = totalItems > 0 && allLeafsChecked;
-        }
       }
 
+      // Salvataggio e interazione delle checkbox
       allCheckboxes.forEach((checkbox) => {
         const savedState = localStorage.getItem(checkbox.id);
         if (savedState === "true") {
@@ -1311,6 +1315,7 @@
 
         checkbox.addEventListener("change", () => {
           const liItem = checkbox.closest("li");
+          // Se spunti la serie intera, spunti anche tutti i suoi episodi
           if (liItem) {
             const seriesCb = liItem.querySelector(
               ':scope > .movie-item input[type="checkbox"]',
@@ -1331,6 +1336,7 @@
         });
       });
 
+      // Aziona / Seleziona tutto globale (escluse le fasi)
       if (globalCheckbox) {
         globalCheckbox.addEventListener("change", (e) => {
           const isChecked = e.target.checked;
@@ -1348,15 +1354,16 @@
         });
       }
 
+      // Gestione spunta intera Fase
       phaseCheckboxes.forEach((phaseCb) => {
-        phaseCb.addEventListener("click", (e) => {
+        phaseCb.addEventListener("click", () => {
           const isChecked = phaseCb.checked;
           const categoryDiv = phaseCb.closest(".category");
           const phaseCheckboxesList = categoryDiv.querySelectorAll(
-            '.movie-list input[type="checkbox"]',
+            'input[type="checkbox"]:not(.check-phase)',
           );
 
-          phaseCheckboxesList.forEach((cb) => {
+          phaseCheckboxesList.forEa((cb) => {
             cb.checked = isChecked;
             localStorage.setItem(cb.id, isChecked);
           });

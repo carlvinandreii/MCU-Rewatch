@@ -1360,10 +1360,10 @@
           const isChecked = phaseCb.checked;
           const categoryDiv = phaseCb.closest(".category");
           const phaseCheckboxesList = categoryDiv.querySelectorAll(
-            'input[type="checkbox"]:not(.check-phase)',
+            '.movie-list input[type="checkbox"]',
           );
 
-          phaseCheckboxesList.forEa((cb) => {
+          phaseCheckboxesList.forEach((cb) => {
             cb.checked = isChecked;
             localStorage.setItem(cb.id, isChecked);
           });

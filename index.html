@@ -25,13 +25,15 @@
       }
 
       /* --- SEZIONE SPLASH SCREEN E VIDEO INTRO --- */
+      /* --- SCHERMATA INIZIALE PERSONALIZZATA --- */
       #intro-screen {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: #000;
+        /* Sfondo con gradiente scuro + un'immagine a tema (puoi metterci una tua foto di sfondo in media/sfondo-intro.jpg o lasciare il nero profondo) */
+        background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(0, 0, 0, 0.95));
         z-index: 9999;
         display: flex;
         flex-direction: column;
@@ -39,12 +41,19 @@
         align-items: center;
         transition: opacity 1s ease;
       }
+
+      #intro-logo {
+        max-width: 420px;
+        margin-bottom: 35px;
+        filter: drop-shadow(0 0 20px rgba(226, 54, 54, 0.6));
+      }
+
       #start-btn {
         background-color: #e23636;
         color: white;
         font-family: "Avengeance", sans-serif;
-        font-size: 2em;
-        padding: 15px 40px;
+        font-size: 1.8em;
+        padding: 15px 35px;
         border: none;
         border-radius: 8px;
         cursor: pointer;
@@ -54,9 +63,48 @@
           transform 0.2s ease,
           box-shadow 0.2s ease;
       }
+
       #start-btn:hover {
         transform: scale(1.05);
         box-shadow: 0 0 30px rgba(226, 54, 54, 0.9);
+      }
+
+      /* Firma Instagram in basso nella schermata iniziale */
+      #intro-social {
+        position: absolute;
+        bottom: 30px;
+        opacity: 0.8;
+      }
+
+      #intro-social a {
+        color: white;
+        text-decoration: none;
+        font-family: "Inter", sans-serif;
+        font-size: 0.95em;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        transition: opacity 0.2s;
+      }
+
+      #intro-social a:hover {
+        opacity: 1;
+      }
+
+      #intro-social img {
+        width: 18px;
+        height: 18px;
+      }
+
+      /* Adattamento per smartphone */
+      @media (max-width: 768px) {
+        #intro-logo {
+          max-width: 260px;
+        }
+        #start-btn {
+          font-size: 1.4em;
+          padding: 12px 25px;
+        }
       }
       #intro-video-container {
         position: fixed;
@@ -73,8 +121,7 @@
       #intro-video {
         width: 100%;
         height: 100%;
-        object-fit: contain;
-        background-color: #000;
+        object-fit: cover;
       }
       #skip-btn {
         position: absolute;
@@ -227,18 +274,28 @@
       <source src="media/musica.mp4.mp4" type="audio/mp4" />
     </audio>
 
-    <!-- SCHERMATA INIZIALE (PULSANTE START) -->
+    <!-- SCHERMATA INIZIALE (SPLASH SCREEN) -->
     <div id="intro-screen">
+      <!-- Logo Marvel classico ingrandito -->
       <img
-        src="https://upload.wikimedia.org/wikipedia/commons/1/10/Marvel_Studios_2016_logo.svg"
+        src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Marvel_Logo.svg"
         alt="Marvel Logo"
-        style="
-          max-width: 300px;
-          margin-bottom: 40px;
-          filter: drop-shadow(0px 4px 15px rgba(226, 54, 54, 0.4));
-        "
+        id="intro-logo"
       />
+
+      <!-- Pulsante centrale -->
       <button id="start-btn">ENTRA NEL MULTIVERSO</button>
+
+      <!-- Il tuo nome Instagram in basso -->
+      <div id="intro-social">
+        <a href="https://www.instagram.com/carlvinandreii" target="_blank">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg"
+            alt="Instagram"
+          />
+          @carlvinandreii
+        </a>
+      </div>
     </div>
 
     <!-- CONTENITORE VIDEO INTRO -->

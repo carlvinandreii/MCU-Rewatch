@@ -266,6 +266,36 @@
         padding: 3px 0;
         border-bottom: none;
       }
+      /* --- CORREZIONI MOBILE (VIDEO E SOCIAL) --- */
+      @media (max-width: 768px) {
+        /* 1. Rende il video fluido e della giusta misura su smartphone */
+        #intro-video-container video,
+        #intro-video {
+          width: 100% !important;
+          height: auto !important;
+          max-height: 80vh;
+          object-fit: contain;
+        }
+
+        /* 2. Sistema il nome Instagram nella schermata iniziale per evitare che venga tagliato */
+        #intro-social {
+          position: relative !important;
+          bottom: auto !important;
+          margin-top: 25px !important;
+        }
+
+        /* 3. Evita che il logo iniziale sia troppo gigante su mobile */
+        #intro-logo {
+          max-width: 240px !important;
+          margin-bottom: 20px !important;
+        }
+
+        /* 4. Rimpicciolisce leggermente il pulsante per farlo star comodo */
+        #start-btn {
+          font-size: 1.3em !important;
+          padding: 12px 25px !important;
+        }
+      }
     </style>
   </head>
   <body>
@@ -286,7 +316,7 @@
       <!-- Pulsante centrale -->
       <button id="start-btn">ENTRA NEL MULTIVERSO</button>
 
-      <!-- Il tuo nome Instagram in basso -->
+      <!-- Il tuo nome Instagram in basso (ora sicuro anche su mobile) -->
       <div id="intro-social">
         <a href="https://www.instagram.com/carlvinandreii" target="_blank">
           <img

@@ -296,9 +296,40 @@
           padding: 12px 25px !important;
         }
       }
+      /* Stile del bottone Audio mimetizzato con lo sfondo */
+      #audio-toggle-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 10000;
+        background-color: #0f172a; /* Del colore dello sfondo principale */
+        color: white;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        border-radius: 50%;
+        width: 45px;
+        height: 45px;
+        font-size: 1.2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition:
+          background-color 0.2s,
+          border-color 0.2s,
+          transform 0.2s;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+      }
+
+      #audio-toggle-btn:hover {
+        background-color: #1e293b; /* Leggermente più chiaro al passaggio del mouse */
+        border-color: #e23636; /* Bordo rosso Marvel al hover */
+        transform: scale(1.05);
+      }
     </style>
   </head>
   <body>
+    <!-- BOTTONE MUTE / AUDIO -->
+    <button id="audio-toggle-btn" title="Attiva/Disattiva Audio">🔊</button>
     <!-- MUSICA DI SOTTOFONDO (Da file mp4 registrato) -->
     <audio id="bg-music" loop>
       <source src="media/musica.mp4.mp4" type="audio/mp4" />
@@ -1404,6 +1435,25 @@
       });
 
       updateProgress();
+      // GESTIONE PULSANTE AUDIO A PROVA DI ERRORE
+      document.addEventListener("DOMContentLoaded", function () {
+        const audioBtn = document.getElementById("audio-toggle-btn");
+        const bgMusic = document.getElementById("bg-music");
+
+        if (audioBtn && bgMusic) {
+          audioBtn.addEventListener("click", function () {
+            if (bgMusic.muted) {
+              bgMusic.muted = false;
+              audioBtn.innerText = "🔊";
+              audioBtn.title = "Disattiva Audio";
+            } else {
+              bgMusic.muted = true;
+              audioBtn.innerText = "🔇";
+              audioBtn.title = "Attiva Audio";
+            }
+          });
+        }
+      });
     </script>
   </body>
 </html>

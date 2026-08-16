@@ -21,10 +21,81 @@
         margin: 0;
         padding: 25px;
         font-size: 14px;
+        overflow-x: hidden;
       }
+
+      /* --- SEZIONE SPLASH SCREEN E VIDEO INTRO --- */
+      #intro-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #000;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 1s ease;
+      }
+      #start-btn {
+        background-color: #e23636;
+        color: white;
+        font-family: "Avengeance", sans-serif;
+        font-size: 2em;
+        padding: 15px 40px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        letter-spacing: 2px;
+        box-shadow: 0 0 20px rgba(226, 54, 54, 0.6);
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      #start-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 30px rgba(226, 54, 54, 0.9);
+      }
+      #intro-video-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #000;
+        z-index: 9998;
+        display: none;
+        opacity: 1;
+        transition: opacity 1.5s ease;
+      }
+      #intro-video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      #skip-btn {
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        border: 1px solid white;
+        padding: 10px 20px;
+        font-family: "Inter", sans-serif;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 10000;
+      }
+      /* ------------------------------------------- */
+
       .container {
         max-width: 1400px;
         margin: 0 auto;
+        /* Nascondiamo il contenuto finché non finisce l'intro */
+        opacity: 0;
+        transition: opacity 1.5s ease;
       }
       h1 {
         text-align: center;
@@ -150,7 +221,35 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <!-- MUSICA DI SOTTOFONDO (Da file mp4 registrato) -->
+    <audio id="bg-music" loop>
+      <source src="media/musica.mp4" type="audio/mp4" />
+    </audio>
+
+    <!-- SCHERMATA INIZIALE (PULSANTE START) -->
+    <div id="intro-screen">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/1/10/Marvel_Studios_2016_logo.svg"
+        alt="Marvel Logo"
+        style="
+          max-width: 300px;
+          margin-bottom: 40px;
+          filter: drop-shadow(0px 4px 15px rgba(226, 54, 54, 0.4));
+        "
+      />
+      <button id="start-btn">ENTRA NEL MULTIVERSO</button>
+    </div>
+
+    <!-- CONTENITORE VIDEO INTRO -->
+    <div id="intro-video-container">
+      <video id="intro-video" playsinline>
+        <source src="media/intro.mp4" type="video/mp4" />
+      </video>
+      <button id="skip-btn">Salta Intro ⏭</button>
+    </div>
+
+    <!-- IL SITO VERO E PROPRIO -->
+    <div class="container" id="main-content">
       <!-- LOGO MARVEL STUDIOS -->
       <div style="text-align: center; margin-top: 25px; margin-bottom: 5px">
         <img
@@ -182,7 +281,7 @@
             style="
               cursor: pointer;
               font-weight: 600;
-              color: #e4dcdc;
+              color: #e23636;
               display: inline-flex;
               align-items: center;
               width: auto;
@@ -202,7 +301,7 @@
         <!-- FASE 1 -->
         <div class="category">
           <div class="category-header">
-            <h2>Fase 1</h2>
+            <h2>Fase 1: L'Inizio</h2>
             <label style="width: auto; margin: 0"
               ><input type="checkbox" id="phase-1" class="check-phase"
             /></label>
@@ -313,7 +412,7 @@
         <!-- FASE 3 -->
         <div class="category">
           <div class="category-header">
-            <h2>Fase 3</h2>
+            <h2>Fase 3: Verso Endgame</h2>
             <label style="width: auto; margin: 0"
               ><input type="checkbox" id="phase-3" class="check-phase"
             /></label>
@@ -413,7 +512,7 @@
         <!-- FASE 4 -->
         <div class="category">
           <div class="category-header">
-            <h2>Fase 4</h2>
+            <h2>Fase 4: Il Multiverso</h2>
             <label style="width: auto; margin: 0"
               ><input type="checkbox" id="phase-4" class="check-phase"
             /></label>
@@ -927,24 +1026,6 @@
                 ><span class="duration">2h 6m</span>
               </div>
             </li>
-            <li>
-              <div class="movie-item">
-                <label>
-                  <input type="checkbox" id="m45" /> I Fantastici Quattro - Gli
-                  inizi (2025)
-                </label>
-                <span class="duration">1h 55m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label>
-                  <input type="checkbox" id="m46" /> Spider-Man: Brand New Day
-                  (2026)
-                </label>
-                <span class="duration">2h 25m</span>
-              </div>
-            </li>
           </ul>
         </div>
 
@@ -1023,6 +1104,50 @@
     </div>
 
     <script>
+      // GESTIONE INTRO, VIDEO E AUDIO
+      const startBtn = document.getElementById("start-btn");
+      const introScreen = document.getElementById("intro-screen");
+      const videoContainer = document.getElementById("intro-video-container");
+      const introVideo = document.getElementById("intro-video");
+      const skipBtn = document.getElementById("skip-btn");
+      const mainContent = document.getElementById("main-content");
+      const bgMusic = document.getElementById("bg-music");
+
+      // Funzione per chiudere il video e mostrare il sito
+      function showMainSite() {
+        videoContainer.style.opacity = "0";
+        setTimeout(() => {
+          videoContainer.style.display = "none";
+          mainContent.style.opacity = "1";
+          // Facciamo partire la musica di sottofondo
+          bgMusic.volume = 0.5; // Mettiamo il volume al 50% per non assordare
+          bgMusic.play();
+        }, 1500); // Aspetta che finisca la sfumatura
+      }
+
+      startBtn.addEventListener("click", () => {
+        // Nasconde la schermata col pulsante
+        introScreen.style.opacity = "0";
+        setTimeout(() => {
+          introScreen.style.display = "none";
+          // Mostra il video e lo fa partire
+          videoContainer.style.display = "block";
+          introVideo.play();
+        }, 1000);
+      });
+
+      // Quando il video finisce naturalmente
+      introVideo.addEventListener("ended", showMainSite);
+
+      // Quando l'utente preme "Salta Intro"
+      skipBtn.addEventListener("click", () => {
+        introVideo.pause();
+        showMainSite();
+      });
+
+      // -------------------------------------------------
+      // SCRIPT ORIGINALE DEL TRACKER
+      // -------------------------------------------------
       const contentCheckboxes = document.querySelectorAll(
         '.category .movie-list > li > .movie-item input[type="checkbox"]:not(:has(+ details)), .category .movie-list > li:not(:has(.movie-item)) input[type="checkbox"], .category .episodes input[type="checkbox"]',
       );

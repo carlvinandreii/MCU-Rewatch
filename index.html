@@ -24,15 +24,13 @@
         overflow-x: hidden;
       }
 
-      /* --- SEZIONE SPLASH SCREEN E VIDEO INTRO --- */
-      /* --- SCHERMATA INIZIALE PERSONALIZZATA --- */
+      /* --- SEZIONE SPLASH SCREEN --- */
       #intro-screen {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        /* Sfondo con gradiente scuro + un'immagine a tema (puoi metterci una tua foto di sfondo in media/sfondo-intro.jpg o lasciare il nero profondo) */
         background: linear-gradient(rgba(15, 23, 42, 0.9), rgba(0, 0, 0, 0.95));
         z-index: 9999;
         display: flex;
@@ -69,7 +67,6 @@
         box-shadow: 0 0 30px rgba(226, 54, 54, 0.9);
       }
 
-      /* Firma Instagram in basso nella schermata iniziale */
       #intro-social {
         position: absolute;
         bottom: 30px;
@@ -96,16 +93,7 @@
         height: 18px;
       }
 
-      /* Adattamento per smartphone */
-      @media (max-width: 768px) {
-        #intro-logo {
-          max-width: 260px;
-        }
-        #start-btn {
-          font-size: 1.4em;
-          padding: 12px 25px;
-        }
-      }
+      /* --- VIDEO INTRO --- */
       #intro-video-container {
         position: fixed;
         top: 0;
@@ -118,11 +106,13 @@
         opacity: 1;
         transition: opacity 1.5s ease;
       }
+
       #intro-video {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
+
       #skip-btn {
         position: absolute;
         bottom: 30px;
@@ -136,24 +126,84 @@
         cursor: pointer;
         z-index: 10000;
       }
-      /* ------------------------------------------- */
 
+      /* --- CONTENITORE PRINCIPALE --- */
       .container {
         max-width: 1400px;
         margin: 0 auto;
-        /* Nascondiamo il contenuto finché non finisce l'intro */
         opacity: 0;
         transition: opacity 1.5s ease;
       }
-      h1 {
-        text-align: center;
-        color: #e23636;
-        text-transform: uppercase;
-        font-size: 2.8em;
+
+      /* --- MENU A SCHEDE (TABS) --- */
+      .tabs-container {
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 40px;
+        margin-top: 30px;
         margin-bottom: 30px;
-        font-family: "Avengeance", sans-serif;
-        letter-spacing: 2px;
       }
+
+      .tab-btn {
+        background: transparent;
+        border: none;
+        color: #64748b;
+        cursor: pointer;
+        text-align: center;
+        transition:
+          transform 0.3s,
+          filter 0.3s;
+        filter: grayscale(100%) opacity(0.5);
+      }
+
+      .tab-btn:hover {
+        transform: scale(1.05);
+        filter: grayscale(50%) opacity(0.8);
+      }
+
+      .tab-btn.active {
+        filter: grayscale(0%) opacity(1);
+        color: #e23636;
+      }
+
+      .tab-btn img {
+        height: 60px;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto 10px auto;
+        filter: drop-shadow(0px 4px 10px rgba(226, 54, 54, 0.4));
+      }
+
+      .tab-btn h1 {
+        margin: 0;
+        font-size: 2em;
+        text-transform: uppercase;
+        font-family: "Avengeance", sans-serif;
+        letter-spacing: 1.5px;
+      }
+
+      .view-section {
+        display: none;
+        animation: fadeIn 0.5s ease;
+      }
+
+      .view-section.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(15px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* --- STILI DASHBOARD E FILM --- */
       .top-dashboard {
         background-color: #1e293b;
         border-radius: 12px;
@@ -266,43 +316,14 @@
         padding: 3px 0;
         border-bottom: none;
       }
-      /* --- CORREZIONI MOBILE (VIDEO E SOCIAL) --- */
-      @media (max-width: 768px) {
-        /* 1. Rende il video fluido e della giusta misura su smartphone */
-        #intro-video-container video,
-        #intro-video {
-          width: 100% !important;
-          height: auto !important;
-          max-height: 80vh;
-          object-fit: contain;
-        }
 
-        /* 2. Sistema il nome Instagram nella schermata iniziale per evitare che venga tagliato */
-        #intro-social {
-          position: relative !important;
-          bottom: auto !important;
-          margin-top: 25px !important;
-        }
-
-        /* 3. Evita che il logo iniziale sia troppo gigante su mobile */
-        #intro-logo {
-          max-width: 240px !important;
-          margin-bottom: 20px !important;
-        }
-
-        /* 4. Rimpicciolisce leggermente il pulsante per farlo star comodo */
-        #start-btn {
-          font-size: 1.3em !important;
-          padding: 12px 25px !important;
-        }
-      }
-      /* Stile del bottone Audio mimetizzato con lo sfondo */
+      /* --- BOTTONE AUDIO --- */
       #audio-toggle-btn {
         position: fixed;
         top: 20px;
         right: 20px;
         z-index: 10000;
-        background-color: #0f172a; /* Del colore dello sfondo principale */
+        background-color: #0f172a;
         color: white;
         border: 2px solid rgba(255, 255, 255, 0.2);
         border-radius: 50%;
@@ -319,35 +340,66 @@
           transform 0.2s;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
       }
-
       #audio-toggle-btn:hover {
-        background-color: #1e293b; /* Leggermente più chiaro al passaggio del mouse */
-        border-color: #e23636; /* Bordo rosso Marvel al hover */
+        background-color: #1e293b;
+        border-color: #e23636;
         transform: scale(1.05);
+      }
+
+      /* --- RESPONSIVE MOBILE --- */
+      @media (max-width: 768px) {
+        #intro-video-container video,
+        #intro-video {
+          width: 100% !important;
+          height: auto !important;
+          max-height: 80vh;
+          object-fit: contain;
+        }
+        #intro-social {
+          position: relative !important;
+          bottom: auto !important;
+          margin-top: 25px !important;
+        }
+        #intro-logo {
+          max-width: 240px !important;
+          margin-bottom: 20px !important;
+        }
+        #start-btn {
+          font-size: 1.3em !important;
+          padding: 12px 25px !important;
+        }
+        .tabs-container {
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+        }
+        .tab-btn img {
+          height: 40px;
+          margin-bottom: 5px;
+        }
+        .tab-btn h1 {
+          font-size: 1.5em;
+        }
       }
     </style>
   </head>
   <body>
-    <!-- BOTTONE MUTE / AUDIO -->
+    <!-- BOTTONE AUDIO -->
     <button id="audio-toggle-btn" title="Attiva/Disattiva Audio">🔊</button>
-    <!-- MUSICA DI SOTTOFONDO (Da file mp4 registrato) -->
+
+    <!-- MUSICA -->
     <audio id="bg-music" loop>
       <source src="media/musica.mp4.mp4" type="audio/mp4" />
     </audio>
 
-    <!-- SCHERMATA INIZIALE (SPLASH SCREEN) -->
+    <!-- SCHERMATA INIZIALE -->
     <div id="intro-screen">
-      <!-- Logo Marvel classico ingrandito -->
       <img
         src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Marvel_Logo.svg"
         alt="Marvel Logo"
         id="intro-logo"
       />
-
-      <!-- Pulsante centrale -->
       <button id="start-btn">ENTRA NEL MULTIVERSO</button>
-
-      <!-- Il tuo nome Instagram in basso (ora sicuro anche su mobile) -->
       <div id="intro-social">
         <a href="https://www.instagram.com/carlvinandreii" target="_blank">
           <img
@@ -359,7 +411,7 @@
       </div>
     </div>
 
-    <!-- CONTENITORE VIDEO INTRO -->
+    <!-- VIDEO INTRO -->
     <div id="intro-video-container">
       <video id="intro-video" playsinline>
         <source src="media/intro.mp4.mp4" type="video/mp4" />
@@ -367,879 +419,1116 @@
       <button id="skip-btn">Salta Intro ⏭</button>
     </div>
 
-    <!-- IL SITO VERO E PROPRIO -->
+    <!-- SITO PRINCIPALE -->
     <div class="container" id="main-content">
-      <!-- LOGO MARVEL STUDIOS -->
-      <div style="text-align: center; margin-top: 25px; margin-bottom: 5px">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/1/10/Marvel_Studios_2016_logo.svg"
-          alt="Marvel Studios Logo"
-          style="
-            max-width: 380px;
-            filter: drop-shadow(0px 4px 15px rgba(226, 54, 54, 0.4));
-          "
-        />
+      <!-- MENU A SCHEDE -->
+      <div class="tabs-container">
+        <button class="tab-btn active" id="btn-mcu">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/1/10/Marvel_Studios_2016_logo.svg"
+            alt="Marvel Studios"
+          />
+          <h1>Cinematic Universe</h1>
+        </button>
+        <button class="tab-btn" id="btn-universe">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Marvel_Logo.svg"
+            alt="Marvel"
+            style="max-height: 45px; margin-bottom: 25px"
+          />
+          <h1>Universo Marvel</h1>
+        </button>
       </div>
 
-      <!-- NUOVO TITOLO -->
-      <h1 style="margin-top: 15px; font-size: 2.4em">Cinematic Universe</h1>
+      <!-- VISTA 1: MARVEL CINEMATIC UNIVERSE -->
+      <div id="view-mcu" class="view-section active">
+        <!-- DASHBOARD PROGRESSO (Conta solo MCU) -->
+        <div class="top-dashboard">
+          <div class="progress-text">
+            Progresso MCU: <span id="progress-percentage">0</span>% (<span
+              id="progress-count"
+              >0</span
+            >
+            di <span id="total-count">0</span> completati)
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+          <div class="global-controls">
+            <label
+              style="
+                cursor: pointer;
+                font-weight: 600;
+                color: #e23636;
+                display: inline-flex;
+                align-items: center;
+                width: auto;
+              "
+            >
+              <input
+                type="checkbox"
+                id="check-all"
+                style="width: 18px; height: 18px; margin-right: 8px"
+              />
+              Azzera / Seleziona Tutto
+            </label>
+          </div>
+        </div>
 
-      <div class="top-dashboard">
-        <div class="progress-text">
-          Progresso Rewatch: <span id="progress-percentage">0</span>% (<span
-            id="progress-count"
-            >0</span
-          >
-          di <span id="total-count">0</span> completati)
-        </div>
-        <div class="progress-bar">
-          <div class="progress-fill" id="progress-fill"></div>
-        </div>
-        <div class="global-controls">
-          <label
-            style="
-              cursor: pointer;
-              font-weight: 600;
-              color: #e23636;
-              display: inline-flex;
-              align-items: center;
-              width: auto;
-            "
-          >
-            <input
-              type="checkbox"
-              id="check-all"
-              style="width: 18px; height: 18px; margin-right: 8px"
-            />
-            Azzera / Seleziona Tutto
-          </label>
+        <div class="grid-container">
+          <!-- FASE 1 -->
+          <div class="category">
+            <div class="category-header">
+              <h2>Fase 1: L'Inizio</h2>
+              <label style="width: auto; margin: 0"
+                ><input type="checkbox" id="phase-1" class="check-phase"
+              /></label>
+            </div>
+            <ul class="movie-list">
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m1" /> Iron Man (2008)</label
+                  ><span class="duration">2h 6m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m2" /> L'Incredibile Hulk
+                    (2008)</label
+                  ><span class="duration">1h 52m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m3" /> Iron Man 2 (2010)</label
+                  ><span class="duration">2h 4m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label><input type="checkbox" id="m4" /> Thor (2011)</label
+                  ><span class="duration">1h 55m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m5" /> Captain America: Il Primo
+                    Vendicatore (2011)</label
+                  ><span class="duration">2h 4m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m6" /> The Avengers
+                    (2012)</label
+                  ><span class="duration">2h 23m</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- FASE 2 -->
+          <div class="category">
+            <div class="category-header">
+              <h2>Fase 2</h2>
+              <label style="width: auto; margin: 0"
+                ><input type="checkbox" id="phase-2" class="check-phase"
+              /></label>
+            </div>
+            <ul class="movie-list">
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m7" /> Iron Man 3 (2013)</label
+                  ><span class="duration">2h 10m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m8" /> Thor: The Dark World
+                    (2013)</label
+                  ><span class="duration">1h 52m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m9" /> Captain America: The
+                    Winter Soldier (2014)</label
+                  ><span class="duration">2h 16m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m10" /> Guardiani della Galassia
+                    (2014)</label
+                  ><span class="duration">2h 1m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m11" /> Avengers: Age of Ultron
+                    (2015)</label
+                  ><span class="duration">2h 21m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m12" /> Ant-Man (2015)</label
+                  ><span class="duration">1h 57m</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- FASE 3 -->
+          <div class="category">
+            <div class="category-header">
+              <h2>Fase 3: Verso Endgame</h2>
+              <label style="width: auto; margin: 0"
+                ><input type="checkbox" id="phase-3" class="check-phase"
+              /></label>
+            </div>
+            <ul class="movie-list">
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m13" /> Captain America: Civil
+                    War (2016)</label
+                  ><span class="duration">2h 27m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m14" /> Doctor Strange
+                    (2016)</label
+                  ><span class="duration">1h 55m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m15" /> Guardiani della Galassia
+                    Vol. 2 (2017)</label
+                  ><span class="duration">2h 16m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m16" /> Spider-Man: Homecoming
+                    (2017)</label
+                  ><span class="duration">2h 13m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m17" /> Thor: Ragnarok
+                    (2017)</label
+                  ><span class="duration">2h 10m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m18" /> Black Panther
+                    (2018)</label
+                  ><span class="duration">2h 14m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m19" /> Avengers: Infinity War
+                    (2018)</label
+                  ><span class="duration">2h 29m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m20" /> Ant-Man and the Wasp
+                    (2018)</label
+                  ><span class="duration">1h 58m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m21" /> Captain Marvel
+                    (2019)</label
+                  ><span class="duration">2h 3m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m22" /> Avengers: Endgame
+                    (2019)</label
+                  ><span class="duration">3h 1m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m23" /> Spider-Man: Far From
+                    Home (2019)</label
+                  ><span class="duration">2h 9m</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- FASE 4 -->
+          <div class="category">
+            <div class="category-header">
+              <h2>Fase 4: Il Multiverso</h2>
+              <label style="width: auto; margin: 0"
+                ><input type="checkbox" id="phase-4" class="check-phase"
+              /></label>
+            </div>
+            <ul class="movie-list">
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m30" /> WandaVision
+                    (Serie)</label
+                  >
+                </div>
+                <details>
+                  <summary>Visualizza Episodi (9)</summary>
+                  <ul class="episodes">
+                    <li>
+                      <label
+                        ><input type="checkbox" id="wv1" /> Episodio 1</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="wv2" /> Episodio 2</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="wv3" /> Episodio 3</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="wv4" /> Episodio 4</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="wv5" /> Episodio 5</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="wv6" /> Episodio 6</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="wv7" /> Episodio 7</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="wv8" /> Episodio 8</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="wv9" /> Episodio 9</label
+                      >
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m31" /> The Falcon and the
+                    Winter Soldier</label
+                  >
+                </div>
+                <details>
+                  <summary>Visualizza Episodi (6)</summary>
+                  <ul class="episodes">
+                    <li>
+                      <label
+                        ><input type="checkbox" id="fatws1" /> Episodio 1</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="fatws2" /> Episodio 2</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="fatws3" /> Episodio 3</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="fatws4" /> Episodio 4</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="fatws5" /> Episodio 5</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="fatws6" /> Episodio 6</label
+                      >
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m31b" /> Loki - Stagione
+                    1</label
+                  >
+                </div>
+                <details>
+                  <summary>Visualizza Episodi (6)</summary>
+                  <ul class="episodes">
+                    <li>
+                      <label
+                        ><input type="checkbox" id="l1-1" /> Episodio 1</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="l1-2" /> Episodio 2</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="l1-3" /> Episodio 3</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="l1-4" /> Episodio 4</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="l1-5" /> Episodio 5</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="l1-6" /> Episodio 6</label
+                      >
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m32" /> Black Widow
+                    (2021)</label
+                  ><span class="duration">2h 14m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m33" /> Shang-Chi e la leggenda
+                    dei Dieci Anelli (2021)</label
+                  ><span class="duration">2h 12m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m34" /> Eternals (2021)</label
+                  ><span class="duration">2h 36m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label><input type="checkbox" id="m34b" /> Hawkeye</label>
+                </div>
+                <details>
+                  <summary>Visualizza Episodi (6)</summary>
+                  <ul class="episodes">
+                    <li>
+                      <label
+                        ><input type="checkbox" id="hw1" /> Episodio 1</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="hw2" /> Episodio 2</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="hw3" /> Episodio 3</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="hw4" /> Episodio 4</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="hw5" /> Episodio 5</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="hw6" /> Episodio 6</label
+                      >
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m35" /> Spider-Man: No Way Home
+                    (2021)</label
+                  ><span class="duration">2h 28m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label><input type="checkbox" id="m35b" /> Moon Knight</label>
+                </div>
+                <details>
+                  <summary>Visualizza Episodi (6)</summary>
+                  <ul class="episodes">
+                    <li>
+                      <label
+                        ><input type="checkbox" id="mk1" /> Episodio 1</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="mk2" /> Episodio 2</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="mk3" /> Episodio 3</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="mk4" /> Episodio 4</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="mk5" /> Episodio 5</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="mk6" /> Episodio 6</label
+                      >
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m36" /> Doctor Strange nel
+                    Multiverso della Follia (2022)</label
+                  ><span class="duration">2h 6m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label><input type="checkbox" id="m36b" /> Ms. Marvel</label>
+                </div>
+                <details>
+                  <summary>Visualizza Episodi (6)</summary>
+                  <ul class="episodes">
+                    <li>
+                      <label
+                        ><input type="checkbox" id="msm1" /> Episodio 1</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="msm2" /> Episodio 2</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="msm3" /> Episodio 3</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="msm4" /> Episodio 4</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="msm5" /> Episodio 5</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="msm6" /> Episodio 6</label
+                      >
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m37" /> Thor: Love and Thunder
+                    (2022)</label
+                  ><span class="duration">1h 59m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m37b" /> She-Hulk: Attorney at
+                    Law</label
+                  >
+                </div>
+                <details>
+                  <summary>Visualizza Episodi (9)</summary>
+                  <ul class="episodes">
+                    <li>
+                      <label
+                        ><input type="checkbox" id="sh1" /> Episodio 1</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="sh2" /> Episodio 2</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="sh3" /> Episodio 3</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="sh4" /> Episodio 4</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="sh5" /> Episodio 5</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="sh6" /> Episodio 6</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="sh7" /> Episodio 7</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="sh8" /> Episodio 8</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="sh9" /> Episodio 9</label
+                      >
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m38" /> Black Panther: Wakanda
+                    Forever (2022)</label
+                  ><span class="duration">2h 41m</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- FASE 5 -->
+          <div class="category">
+            <div class="category-header">
+              <h2>Fase 5</h2>
+              <label style="width: auto; margin: 0"
+                ><input type="checkbox" id="phase-5" class="check-phase"
+              /></label>
+            </div>
+            <ul class="movie-list">
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m39" /> Ant-Man and the Wasp:
+                    Quantumania (2023)</label
+                  ><span class="duration">2h 5m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m40" /> Guardiani della Galassia
+                    Vol. 3 (2023)</label
+                  ><span class="duration">2h 30m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m40b" /> Secret Invasion</label
+                  >
+                </div>
+                <details>
+                  <summary>Visualizza Episodi (6)</summary>
+                  <ul class="episodes">
+                    <li>
+                      <label
+                        ><input type="checkbox" id="si1" /> Episodio 1</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="si2" /> Episodio 2</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="si3" /> Episodio 3</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="si4" /> Episodio 4</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="si5" /> Episodio 5</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="si6" /> Episodio 6</label
+                      >
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m41" /> Loki - Stagione 2</label
+                  >
+                </div>
+                <details>
+                  <summary>Visualizza Episodi (6)</summary>
+                  <ul class="episodes">
+                    <li>
+                      <label
+                        ><input type="checkbox" id="l2-1" /> Episodio 1</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="l2-2" /> Episodio 2</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="l2-3" /> Episodio 3</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="l2-4" /> Episodio 4</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="l2-5" /> Episodio 5</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="l2-6" /> Episodio 6</label
+                      >
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m42" /> The Marvels
+                    (2023)</label
+                  ><span class="duration">1h 45m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label><input type="checkbox" id="m42b" /> Echo</label>
+                </div>
+                <details>
+                  <summary>Visualizza Episodi (5)</summary>
+                  <ul class="episodes">
+                    <li>
+                      <label
+                        ><input type="checkbox" id="ec1" /> Episodio 1</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="ec2" /> Episodio 2</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="ec3" /> Episodio 3</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="ec4" /> Episodio 4</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="ec5" /> Episodio 5</label
+                      >
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m42c" /> Deadpool & Wolverine
+                    (2024)</label
+                  ><span class="duration">2h 7m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m42d" /> Agatha All Along</label
+                  >
+                </div>
+                <details>
+                  <summary>Visualizza Episodi (9)</summary>
+                  <ul class="episodes">
+                    <li>
+                      <label
+                        ><input type="checkbox" id="ag1" /> Episodio 1</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="ag2" /> Episodio 2</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="ag3" /> Episodio 3</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="ag4" /> Episodio 4</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="ag5" /> Episodio 5</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="ag6" /> Episodio 6</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="ag7" /> Episodio 7</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="ag8" /> Episodio 8</label
+                      >
+                    </li>
+                    <li>
+                      <label
+                        ><input type="checkbox" id="ag9" /> Episodio 9</label
+                      >
+                    </li>
+                  </ul>
+                </details>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m43" /> Captain America: Brave
+                    New World (2025)</label
+                  ><span class="duration">1h 58m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m44" /> Thunderbolts*
+                    (2025)</label
+                  ><span class="duration">2h 6m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m_ff" /> The Fantastic Four:
+                    First Steps (2025)</label
+                  ><span class="duration">1h 55m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m_sm4" /> Spider-Man: Brand New
+                    Day</label
+                  ><span class="duration">2h 24m</span>
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
+      <!-- Fine VISTA MCU -->
 
-      <div class="grid-container">
-        <!-- FASE 1 -->
-        <div class="category">
-          <div class="category-header">
-            <h2>Fase 1: L'Inizio</h2>
-            <label style="width: auto; margin: 0"
-              ><input type="checkbox" id="phase-1" class="check-phase"
-            /></label>
+      <!-- VISTA 2: UNIVERSO MARVEL (X-Men, F4, vecchi Spider-Man) -->
+      <div id="view-universe" class="view-section">
+        <div class="grid-container">
+          <!-- SAGA DEGLI X-MEN -->
+          <div class="category">
+            <div class="category-header">
+              <h2>Saga degli X-Men (Fox)</h2>
+              <label style="width: auto; margin: 0"
+                ><input type="checkbox" id="phase-xmen" class="check-phase"
+              /></label>
+            </div>
+            <ul class="movie-list">
+              <li>
+                <div class="movie-item">
+                  <label><input type="checkbox" id="mx1" /> X-Men (2000)</label
+                  ><span class="duration">1h 44m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="mx2" /> X-Men 2 (2003)</label
+                  ><span class="duration">2h 14m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="mx3" /> X-Men: Conflitto Finale
+                    (2006)</label
+                  ><span class="duration">1h 44m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="mx4" /> X-Men Le Origini:
+                    Wolverine (2009)</label
+                  ><span class="duration">1h 47m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="mx5" /> X-Men: L'inizio
+                    (2011)</label
+                  ><span class="duration">2h 11m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="mx6" /> Wolverine L'immortale
+                    (2013)</label
+                  ><span class="duration">2h 6m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m27" /> X-Men: Giorni di un
+                    futuro passato (2014)</label
+                  ><span class="duration">2h 12m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="mx8" /> Deadpool (2016)</label
+                  ><span class="duration">1h 48m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="mx8b" /> X-Men: Apocalisse
+                    (2016)</label
+                  ><span class="duration">2h 24m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label><input type="checkbox" id="m28" /> Logan (2017)</label
+                  ><span class="duration">2h 17m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="mx9" /> Deadpool 2 (2018)</label
+                  ><span class="duration">1h 59m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="mx10" /> X-Men: Dark Phoenix
+                    (2019)</label
+                  ><span class="duration">1h 54m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="mx11" /> The New Mutants
+                    (2020)</label
+                  ><span class="duration">1h 34m</span>
+                </div>
+              </li>
+            </ul>
           </div>
-          <ul class="movie-list">
-            <li>
-              <div class="movie-item">
-                <label><input type="checkbox" id="m1" /> Iron Man (2008)</label
-                ><span class="duration">2h 6m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m2" /> L'Incredibile Hulk
-                  (2008)</label
-                ><span class="duration">1h 52m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m3" /> Iron Man 2 (2010)</label
-                ><span class="duration">2h 4m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label><input type="checkbox" id="m4" /> Thor (2011)</label
-                ><span class="duration">1h 55m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m5" /> Captain America: Il Primo
-                  Vendicatore (2011)</label
-                ><span class="duration">2h 4m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m6" /> The Avengers (2012)</label
-                ><span class="duration">2h 23m</span>
-              </div>
-            </li>
-          </ul>
-        </div>
 
-        <!-- FASE 2 -->
-        <div class="category">
-          <div class="category-header">
-            <h2>Fase 2</h2>
-            <label style="width: auto; margin: 0"
-              ><input type="checkbox" id="phase-2" class="check-phase"
-            /></label>
+          <!-- FANTASTICI 4 & SPIDER-MAN -->
+          <div class="category">
+            <div class="category-header">
+              <h2>Fantastici 4 & Spider-Man</h2>
+              <label style="width: auto; margin: 0"
+                ><input type="checkbox" id="phase-legacy" class="check-phase"
+              /></label>
+            </div>
+            <ul class="movie-list">
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m25" /> Spider-Man (2002) -
+                    Tobey Maguire</label
+                  ><span class="duration">2h 1m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m25b" /> Spider-Man 2 (2004) -
+                    Tobey Maguire</label
+                  ><span class="duration">2h 7m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="mf1" /> I Fantastici 4
+                    (2005)</label
+                  ><span class="duration">1h 46m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m25c" /> Spider-Man 3 (2007) -
+                    Tobey Maguire</label
+                  ><span class="duration">2h 19m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="mf2" /> I Fantastici 4 e Silver
+                    Surfer (2007)</label
+                  ><span class="duration">1h 32m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m26" /> The Amazing Spider-Man
+                    (2012) - Andrew Garfield</label
+                  ><span class="duration">2h 16m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="m26b" /> The Amazing Spider-Man
+                    2 (2014) - Andrew Garfield</label
+                  ><span class="duration">2h 22m</span>
+                </div>
+              </li>
+              <li>
+                <div class="movie-item">
+                  <label
+                    ><input type="checkbox" id="mf3" /> Fantastic 4 - I
+                    Fantastici Quattro (2015)</label
+                  ><span class="duration">1h 40m</span>
+                </div>
+              </li>
+            </ul>
           </div>
-          <ul class="movie-list">
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m7" /> Iron Man 3 (2013)</label
-                ><span class="duration">2h 10m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m8" /> Thor: The Dark World
-                  (2013)</label
-                ><span class="duration">1h 52m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m9" /> Captain America: The Winter
-                  Soldier (2014)</label
-                ><span class="duration">2h 16m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m10" /> Guardiani della Galassia
-                  (2014)</label
-                ><span class="duration">2h 1m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m11" /> Avengers: Age of Ultron
-                  (2015)</label
-                ><span class="duration">2h 21m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label><input type="checkbox" id="m12" /> Ant-Man (2015)</label
-                ><span class="duration">1h 57m</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <!-- FASE 3 -->
-        <div class="category">
-          <div class="category-header">
-            <h2>Fase 3: Verso Endgame</h2>
-            <label style="width: auto; margin: 0"
-              ><input type="checkbox" id="phase-3" class="check-phase"
-            /></label>
-          </div>
-          <ul class="movie-list">
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m13" /> Captain America: Civil War
-                  (2016)</label
-                ><span class="duration">2h 27m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m14" /> Doctor Strange
-                  (2016)</label
-                ><span class="duration">1h 55m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m15" /> Guardiani della Galassia
-                  Vol. 2 (2017)</label
-                ><span class="duration">2h 16m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m16" /> Spider-Man: Homecoming
-                  (2017)</label
-                ><span class="duration">2h 13m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m17" /> Thor: Ragnarok
-                  (2017)</label
-                ><span class="duration">2h 10m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m18" /> Black Panther
-                  (2018)</label
-                ><span class="duration">2h 14m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m19" /> Avengers: Infinity War
-                  (2018)</label
-                ><span class="duration">2h 29m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m20" /> Ant-Man and the Wasp
-                  (2018)</label
-                ><span class="duration">1h 58m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m21" /> Captain Marvel
-                  (2019)</label
-                ><span class="duration">2h 3m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m22" /> Avengers: Endgame
-                  (2019)</label
-                ><span class="duration">3h 1m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m23" /> Spider-Man: Far From Home
-                  (2019)</label
-                ><span class="duration">2h 9m</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <!-- FASE 4 -->
-        <div class="category">
-          <div class="category-header">
-            <h2>Fase 4: Il Multiverso</h2>
-            <label style="width: auto; margin: 0"
-              ><input type="checkbox" id="phase-4" class="check-phase"
-            /></label>
-          </div>
-          <ul class="movie-list">
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m30" /> WandaVision (Serie)</label
-                >
-              </div>
-              <details>
-                <summary>Visualizza Episodi (9)</summary>
-                <ul class="episodes">
-                  <li>
-                    <label><input type="checkbox" id="wv1" /> Episodio 1</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="wv2" /> Episodio 2</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="wv3" /> Episodio 3</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="wv4" /> Episodio 4</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="wv5" /> Episodio 5</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="wv6" /> Episodio 6</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="wv7" /> Episodio 7</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="wv8" /> Episodio 8</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="wv9" /> Episodio 9</label>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m31" /> The Falcon and the Winter
-                  Soldier</label
-                >
-              </div>
-              <details>
-                <summary>Visualizza Episodi (6)</summary>
-                <ul class="episodes">
-                  <li>
-                    <label
-                      ><input type="checkbox" id="fatws1" /> Episodio 1</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="fatws2" /> Episodio 2</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="fatws3" /> Episodio 3</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="fatws4" /> Episodio 4</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="fatws5" /> Episodio 5</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="fatws6" /> Episodio 6</label
-                    >
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m31b" /> Loki - Stagione 1</label
-                >
-              </div>
-              <details>
-                <summary>Visualizza Episodi (6)</summary>
-                <ul class="episodes">
-                  <li>
-                    <label
-                      ><input type="checkbox" id="l1-1" /> Episodio 1</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="l1-2" /> Episodio 2</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="l1-3" /> Episodio 3</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="l1-4" /> Episodio 4</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="l1-5" /> Episodio 5</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="l1-6" /> Episodio 6</label
-                    >
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m32" /> Black Widow (2021)</label
-                ><span class="duration">2h 14m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m33" /> Shang-Chi e la leggenda
-                  dei Dieci Anelli (2021)</label
-                ><span class="duration">2h 12m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label><input type="checkbox" id="m34" /> Eternals (2021)</label
-                ><span class="duration">2h 36m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label><input type="checkbox" id="m34b" /> Hawkeye</label>
-              </div>
-              <details>
-                <summary>Visualizza Episodi (6)</summary>
-                <ul class="episodes">
-                  <li>
-                    <label><input type="checkbox" id="hw1" /> Episodio 1</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="hw2" /> Episodio 2</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="hw3" /> Episodio 3</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="hw4" /> Episodio 4</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="hw5" /> Episodio 5</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="hw6" /> Episodio 6</label>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m35" /> Spider-Man: No Way Home
-                  (2021)</label
-                ><span class="duration">2h 28m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label><input type="checkbox" id="m35b" /> Moon Knight</label>
-              </div>
-              <details>
-                <summary>Visualizza Episodi (6)</summary>
-                <ul class="episodes">
-                  <li>
-                    <label><input type="checkbox" id="mk1" /> Episodio 1</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="mk2" /> Episodio 2</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="mk3" /> Episodio 3</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="mk4" /> Episodio 4</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="mk5" /> Episodio 5</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="mk6" /> Episodio 6</label>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m36" /> Doctor Strange nel
-                  Multiverso della Follia (2022)</label
-                ><span class="duration">2h 6m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label><input type="checkbox" id="m36b" /> Ms. Marvel</label>
-              </div>
-              <details>
-                <summary>Visualizza Episodi (6)</summary>
-                <ul class="episodes">
-                  <li>
-                    <label
-                      ><input type="checkbox" id="msm1" /> Episodio 1</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="msm2" /> Episodio 2</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="msm3" /> Episodio 3</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="msm4" /> Episodio 4</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="msm5" /> Episodio 5</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="msm6" /> Episodio 6</label
-                    >
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m37" /> Thor: Love and Thunder
-                  (2022)</label
-                ><span class="duration">1h 59m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m37b" /> She-Hulk: Attorney at
-                  Law</label
-                >
-              </div>
-              <details>
-                <summary>Visualizza Episodi (9)</summary>
-                <ul class="episodes">
-                  <li>
-                    <label><input type="checkbox" id="sh1" /> Episodio 1</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="sh2" /> Episodio 2</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="sh3" /> Episodio 3</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="sh4" /> Episodio 4</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="sh5" /> Episodio 5</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="sh6" /> Episodio 6</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="sh7" /> Episodio 7</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="sh8" /> Episodio 8</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="sh9" /> Episodio 9</label>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m38" /> Black Panther: Wakanda
-                  Forever (2022)</label
-                ><span class="duration">2h 41m</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <!-- FASE 5 -->
-        <div class="category">
-          <div class="category-header">
-            <h2>Fase 5</h2>
-            <label style="width: auto; margin: 0"
-              ><input type="checkbox" id="phase-5" class="check-phase"
-            /></label>
-          </div>
-          <ul class="movie-list">
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m39" /> Ant-Man and the Wasp:
-                  Quantumania (2023)</label
-                ><span class="duration">2h 5m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m40" /> Guardiani della Galassia
-                  Vol. 3 (2023)</label
-                ><span class="duration">2h 30m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m40b" /> Secret Invasion</label
-                >
-              </div>
-              <details>
-                <summary>Visualizza Episodi (6)</summary>
-                <ul class="episodes">
-                  <li>
-                    <label><input type="checkbox" id="si1" /> Episodio 1</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="si2" /> Episodio 2</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="si3" /> Episodio 3</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="si4" /> Episodio 4</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="si5" /> Episodio 5</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="si6" /> Episodio 6</label>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m41" /> Loki - Stagione 2</label
-                >
-              </div>
-              <details>
-                <summary>Visualizza Episodi (6)</summary>
-                <ul class="episodes">
-                  <li>
-                    <label
-                      ><input type="checkbox" id="l2-1" /> Episodio 1</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="l2-2" /> Episodio 2</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="l2-3" /> Episodio 3</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="l2-4" /> Episodio 4</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="l2-5" /> Episodio 5</label
-                    >
-                  </li>
-                  <li>
-                    <label
-                      ><input type="checkbox" id="l2-6" /> Episodio 6</label
-                    >
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m42" /> The Marvels (2023)</label
-                ><span class="duration">1h 45m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label><input type="checkbox" id="m42b" /> Echo</label>
-              </div>
-              <details>
-                <summary>Visualizza Episodi (5)</summary>
-                <ul class="episodes">
-                  <li>
-                    <label><input type="checkbox" id="ec1" /> Episodio 1</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="ec2" /> Episodio 2</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="ec3" /> Episodio 3</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="ec4" /> Episodio 4</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="ec5" /> Episodio 5</label>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m42c" /> Deadpool & Wolverine
-                  (2024)</label
-                ><span class="duration">2h 7m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m42d" /> Agatha All Along</label
-                >
-              </div>
-              <details>
-                <summary>Visualizza Episodi (9)</summary>
-                <ul class="episodes">
-                  <li>
-                    <label><input type="checkbox" id="ag1" /> Episodio 1</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="ag2" /> Episodio 2</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="ag3" /> Episodio 3</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="ag4" /> Episodio 4</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="ag5" /> Episodio 5</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="ag6" /> Episodio 6</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="ag7" /> Episodio 7</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="ag8" /> Episodio 8</label>
-                  </li>
-                  <li>
-                    <label><input type="checkbox" id="ag9" /> Episodio 9</label>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m43" /> Captain America: Brave New
-                  World (2025)</label
-                ><span class="duration">1h 58m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m44" /> Thunderbolts*
-                  (2025)</label
-                ><span class="duration">2h 6m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m_ff" /> The Fantastic Four: First
-                  Steps (2025)</label
-                ><span class="duration">1h 55m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m_sm4" /> Spider-Man: Brand New
-                  Day</label
-                ><span class="duration">2h 24m</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <!-- UNIVERSO MULTIVERSO -->
-        <div class="category">
-          <div class="category-header">
-            <h2>Universo Multiverso (Fox/Sony)</h2>
-            <label style="width: auto; margin: 0"
-              ><input type="checkbox" id="phase-6" class="check-phase"
-            /></label>
-          </div>
-          <ul class="movie-list">
-            <li>
-              <div class="movie-item">
-                <label><input type="checkbox" id="m24" /> X-Men (2000)</label
-                ><span class="duration">1h 44m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m25" /> Spider-Man (2002) - Tobey
-                  Maguire</label
-                ><span class="duration">2h 1m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m25b" /> Spider-Man 2 (2004) -
-                  Tobey Maguire</label
-                ><span class="duration">2h 7m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m25c" /> Spider-Man 3 (2007) -
-                  Tobey Maguire</label
-                ><span class="duration">2h 19m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m26" /> The Amazing Spider-Man
-                  (2012) - Andrew Garfield</label
-                ><span class="duration">2h 16m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m26b" /> The Amazing Spider-Man 2
-                  (2014) - Andrew Garfield</label
-                ><span class="duration">2h 22m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label
-                  ><input type="checkbox" id="m27" /> X-Men: Giorni di un futuro
-                  passato (2014)</label
-                ><span class="duration">2h 12m</span>
-              </div>
-            </li>
-            <li>
-              <div class="movie-item">
-                <label><input type="checkbox" id="m28" /> Logan (2017)</label
-                ><span class="duration">2h 17m</span>
-              </div>
-            </li>
-          </ul>
         </div>
       </div>
+      <!-- Fine VISTA UNIVERSO -->
     </div>
+    <!-- Fine MAIN CONTENT -->
 
     <script>
-      // GESTIONE INTRO, VIDEO E AUDIO
+      // GESTIONE INTRO E VIDEO
       const startBtn = document.getElementById("start-btn");
       const introScreen = document.getElementById("intro-screen");
       const videoContainer = document.getElementById("intro-video-container");
@@ -1248,46 +1537,58 @@
       const mainContent = document.getElementById("main-content");
       const bgMusic = document.getElementById("bg-music");
 
-      // Funzione per chiudere il video e mostrare il sito
       function showMainSite() {
         videoContainer.style.opacity = "0";
         setTimeout(() => {
           videoContainer.style.display = "none";
           mainContent.style.opacity = "1";
-          // Facciamo partire la musica di sottofondo
-          bgMusic.volume = 0.5; // Mettiamo il volume al 50% per non assordare
+          bgMusic.volume = 0.5;
           bgMusic.play();
-        }, 1500); // Aspetta che finisca la sfumatura
+        }, 1500);
       }
 
       startBtn.addEventListener("click", () => {
-        // Nasconde la schermata col pulsante
         introScreen.style.opacity = "0";
         setTimeout(() => {
           introScreen.style.display = "none";
-          // Mostra il video e lo fa partire
           videoContainer.style.display = "block";
           introVideo.play();
         }, 1000);
       });
 
-      // Quando il video finisce naturalmente
       introVideo.addEventListener("ended", showMainSite);
 
-      // Quando l'utente preme "Salta Intro"
       skipBtn.addEventListener("click", () => {
         introVideo.pause();
         showMainSite();
       });
 
-      // GESTIONE PROGRESSO (FILM + SERIE INTERE COME UNICO ELEMENTO)
-      const movieCheckboxes = document.querySelectorAll(
-        '.category .movie-list > li:not(:has(.episodes)) input[type="checkbox"]',
-      );
-      const seriesListItems = document.querySelectorAll(
-        ".category .movie-list > li:has(.episodes)",
-      );
+      // GESTIONE CAMBIO SCHEDE (MCU vs UNIVERSO)
+      const btnMcu = document.getElementById("btn-mcu");
+      const btnUniverse = document.getElementById("btn-universe");
+      const viewMcu = document.getElementById("view-mcu");
+      const viewUniverse = document.getElementById("view-universe");
 
+      if (btnMcu && btnUniverse) {
+        btnMcu.addEventListener("click", () => {
+          btnMcu.classList.add("active");
+          btnUniverse.classList.remove("active");
+          viewMcu.classList.add("active");
+          viewUniverse.classList.remove("active");
+        });
+
+        btnUniverse.addEventListener("click", () => {
+          btnUniverse.classList.add("active");
+          btnMcu.classList.remove("active");
+          viewUniverse.classList.add("active");
+          viewMcu.classList.remove("active");
+        });
+      }
+
+      // GESTIONE PROGRESSO E SALVATAGGIO
+      const allCheckboxes = document.querySelectorAll(
+        '.category input[type="checkbox"]',
+      );
       const phaseCheckboxes = document.querySelectorAll(".check-phase");
       const globalCheckbox = document.getElementById("check-all");
 
@@ -1296,61 +1597,65 @@
       const progressCount = document.getElementById("progress-count");
       const totalCount = document.getElementById("total-count");
 
-      const allCheckboxes = document.querySelectorAll(
-        '.category input[type="checkbox"]',
-      );
-
       function updateProgress() {
         let totalItems = 0;
         let checkedCount = 0;
 
-        // 1. Contiamo i film singoli
-        movieCheckboxes.forEach((checkbox) => {
-          totalItems++;
-          const parentLabel = checkbox.closest("label");
-          if (checkbox.checked) {
-            checkedCount++;
-            if (parentLabel) parentLabel.classList.add("checked-text");
-          } else {
-            if (parentLabel) parentLabel.classList.remove("checked-text");
-          }
-        });
+        // Gestione di TUTTE le Serie TV (Per estetica sbarrata) + Conteggio (Solo per MCU)
+        document
+          .querySelectorAll(".category .movie-list > li:has(.episodes)")
+          .forEach((liItem) => {
+            const isMCU = liItem.closest("#view-mcu") !== null; // Controlla se fa parte del MCU
+            const seriesCb = liItem.querySelector(
+              ':scope > .movie-item input[type="checkbox"]',
+            );
+            const episodeCbs = liItem.querySelectorAll(
+              '.episodes input[type="checkbox"]',
+            );
+            const seriesLabel = seriesCb ? seriesCb.closest("label") : null;
 
-        // 2. Contiamo le serie TV (1 serie = 1 elemento totale, completata solo se tutti gli episodi sono spuntati)
-        seriesListItems.forEach((liItem) => {
-          totalItems++;
-          const seriesCb = liItem.querySelector(
-            ':scope > .movie-item input[type="checkbox"]',
-          );
-          const episodeCbs = liItem.querySelectorAll(
-            '.episodes input[type="checkbox"]',
-          );
-          const seriesLabel = seriesCb ? seriesCb.closest("label") : null;
+            const allEpChecked = Array.from(episodeCbs).every(
+              (cb) => cb.checked,
+            );
 
-          const allEpChecked = Array.from(episodeCbs).every((cb) => cb.checked);
+            if (seriesCb) seriesCb.checked = allEpChecked;
 
-          if (seriesCb) {
-            seriesCb.checked = allEpChecked;
-          }
+            if (allEpChecked) {
+              if (seriesLabel) seriesLabel.classList.add("checked-text");
+              if (isMCU) checkedCount++; // Aumenta il contatore solo se è MCU
+            } else {
+              if (seriesLabel) seriesLabel.classList.remove("checked-text");
+            }
+            if (isMCU) totalItems++; // Il numero totale sale solo se è MCU
+          });
 
-          if (allEpChecked) {
-            checkedCount++;
-            if (seriesLabel) seriesLabel.classList.add("checked-text");
-          } else {
-            if (seriesLabel) seriesLabel.classList.remove("checked-text");
-          }
-        });
+        // Gestione di TUTTI i Film Singoli (Per estetica sbarrata) + Conteggio (Solo per MCU)
+        document
+          .querySelectorAll(
+            '.category .movie-list > li:not(:has(.episodes)) input[type="checkbox"]',
+          )
+          .forEach((checkbox) => {
+            const isMCU = checkbox.closest("#view-mcu") !== null;
+            const parentLabel = checkbox.closest("label");
 
-        // Calcolo della percentuale
+            if (checkbox.checked) {
+              if (parentLabel) parentLabel.classList.add("checked-text");
+              if (isMCU) checkedCount++;
+            } else {
+              if (parentLabel) parentLabel.classList.remove("checked-text");
+            }
+            if (isMCU) totalItems++;
+          });
+
+        // Aggiorna la barra solo con i dati del MCU
         const percentage =
           totalItems === 0 ? 0 : Math.round((checkedCount / totalItems) * 100);
-
         progressFill.style.width = percentage + "%";
         progressText.innerText = percentage;
         progressCount.innerText = checkedCount;
         totalCount.innerText = totalItems;
 
-        // Gestione delle fasi generali
+        // Gestione caselle delle Fasi
         document.querySelectorAll(".category").forEach((categoryDiv) => {
           const phaseCb = categoryDiv.querySelector(".check-phase");
           if (!phaseCb) return;
@@ -1367,7 +1672,7 @@
         });
       }
 
-      // Salvataggio e interazione delle checkbox
+      // Event Listener per ogni click sulle caselle
       allCheckboxes.forEach((checkbox) => {
         const savedState = localStorage.getItem(checkbox.id);
         if (savedState === "true") {
@@ -1376,7 +1681,7 @@
 
         checkbox.addEventListener("change", () => {
           const liItem = checkbox.closest("li");
-          // Se spunti la serie intera, spunti anche tutti i suoi episodi
+          // Gestione click sulle serie intere
           if (liItem) {
             const seriesCb = liItem.querySelector(
               ':scope > .movie-item input[type="checkbox"]',
@@ -1397,25 +1702,22 @@
         });
       });
 
-      // Aziona / Seleziona tutto globale (escluse le fasi)
+      // Tasto Seleziona Tutto (Nel cruscotto MCU)
       if (globalCheckbox) {
         globalCheckbox.addEventListener("change", (e) => {
           const isChecked = e.target.checked;
-          allCheckboxes.forEach((cb) => {
-            if (!cb.classList.contains("check-phase")) {
+          // Seleziona tutto ma SOLO all'interno della vista MCU
+          document
+            .querySelectorAll('#view-mcu .category input[type="checkbox"]')
+            .forEach((cb) => {
               cb.checked = isChecked;
               localStorage.setItem(cb.id, isChecked);
-            }
-          });
-          phaseCheckboxes.forEach((pcb) => {
-            pcb.checked = isChecked;
-            localStorage.setItem(pcb.id, isChecked);
-          });
+            });
           updateProgress();
         });
       }
 
-      // Gestione spunta intera Fase
+      // Tasto per intere Fasi
       phaseCheckboxes.forEach((phaseCb) => {
         phaseCb.addEventListener("click", () => {
           const isChecked = phaseCb.checked;
@@ -1435,7 +1737,8 @@
       });
 
       updateProgress();
-      // GESTIONE PULSANTE AUDIO A PROVA DI ERRORE
+
+      // GESTIONE PULSANTE AUDIO
       document.addEventListener("DOMContentLoaded", function () {
         const audioBtn = document.getElementById("audio-toggle-btn");
         const bgMusic = document.getElementById("bg-music");

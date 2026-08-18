@@ -116,7 +116,6 @@
         transition: opacity 1.5s ease;
       }
 
-      /* Distanza tra i bottoni aumentata (gap: 80px) */
       .tabs-container {
         display: flex;
         justify-content: center;
@@ -337,7 +336,6 @@
           font-size: 1.3em !important;
           padding: 12px 25px !important;
         }
-        /* Distanza ridotta su mobile */
         .tabs-container {
           flex-direction: column;
           align-items: center;
@@ -455,7 +453,7 @@
     </div>
 
     <!-- ========================================================================= -->
-    <!-- TEMPLATE DATI (Evita ridondanze nel codice) -->
+    <!-- TEMPLATE DATI -->
     <!-- ========================================================================= -->
     <template id="mcu-data">
       <div class="category">
@@ -1355,6 +1353,14 @@
               </ul>
             </details>
           </li>
+        </ul>
+      </div>
+      <div class="category">
+        <div class="category-header">
+          <h2>Fase 6</h2>
+          <label><input type="checkbox" class="check-phase" /></label>
+        </div>
+        <ul class="movie-list">
           <li>
             <div class="movie-item">
               <label
@@ -1366,24 +1372,75 @@
           <li>
             <div class="movie-item">
               <label
-                ><input type="checkbox" class="sync-cb" data-key="m44" />
-                Thunderbolts* (2025)</label
+                ><input type="checkbox" class="sync-cb" data-key="m_dd" />
+                Daredevil: Born Again (Serie - 2025)</label
               >
             </div>
+            <details>
+              <summary>Episodi (9)</summary>
+              <ul class="episodes">
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="dd1" /> Ep
+                    1</label
+                  >
+                </li>
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="dd2" /> Ep
+                    2</label
+                  >
+                </li>
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="dd3" /> Ep
+                    3</label
+                  >
+                </li>
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="dd4" /> Ep
+                    4</label
+                  >
+                </li>
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="dd5" /> Ep
+                    5</label
+                  >
+                </li>
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="dd6" /> Ep
+                    6</label
+                  >
+                </li>
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="dd7" /> Ep
+                    7</label
+                  >
+                </li>
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="dd8" /> Ep
+                    8</label
+                  >
+                </li>
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="dd9" /> Ep
+                    9</label
+                  >
+                </li>
+              </ul>
+            </details>
           </li>
-        </ul>
-      </div>
-      <div class="category">
-        <div class="category-header">
-          <h2>Fase 6: Il Futuro (Upcoming)</h2>
-          <label><input type="checkbox" class="check-phase" /></label>
-        </div>
-        <ul class="movie-list">
           <li>
             <div class="movie-item">
               <label
-                ><input type="checkbox" class="sync-cb" data-key="m_dd" />
-                Daredevil: Born Again (Serie - 2025)</label
+                ><input type="checkbox" class="sync-cb" data-key="m44" />
+                Thunderbolts* (2025)</label
               >
             </div>
           </li>
@@ -1398,24 +1455,66 @@
           <li>
             <div class="movie-item">
               <label
-                ><input type="checkbox" class="sync-cb" data-key="m_sm4" />
-                Spider-Man: Brand New Day</label
-              >
-            </div>
-          </li>
-          <li>
-            <div class="movie-item">
-              <label
                 ><input type="checkbox" class="sync-cb" data-key="m_ih" />
                 Ironheart (Serie - 2025)</label
               >
             </div>
+            <details>
+              <summary>Episodi (6)</summary>
+              <ul class="episodes">
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="ih1" /> Ep
+                    1</label
+                  >
+                </li>
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="ih2" /> Ep
+                    2</label
+                  >
+                </li>
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="ih3" /> Ep
+                    3</label
+                  >
+                </li>
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="ih4" /> Ep
+                    4</label
+                  >
+                </li>
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="ih5" /> Ep
+                    5</label
+                  >
+                </li>
+                <li>
+                  <label
+                    ><input type="checkbox" class="sync-cb" data-key="ih6" /> Ep
+                    6</label
+                  >
+                </li>
+              </ul>
+            </details>
           </li>
           <li>
             <div class="movie-item">
               <label
+                ><input type="checkbox" class="sync-cb" data-key="m_sm4" />
+                Spider-Man: Brand New Day (2026)</label
+              >
+            </div>
+          </li>
+          <!-- Titoli futuri confermati oltre il 2026 -->
+          <li>
+            <div class="movie-item">
+              <label
                 ><input type="checkbox" class="sync-cb" data-key="m_av5" />
-                Avengers: Doomsday (2026)</label
+                Avengers: Doomsday (Upcoming)</label
               >
             </div>
           </li>
@@ -1423,7 +1522,7 @@
             <div class="movie-item">
               <label
                 ><input type="checkbox" class="sync-cb" data-key="m_vq" />
-                Vision Quest (Serie - 2026)</label
+                Vision Quest (Upcoming)</label
               >
             </div>
           </li>
@@ -1431,7 +1530,7 @@
             <div class="movie-item">
               <label
                 ><input type="checkbox" class="sync-cb" data-key="m_av6" />
-                Avengers: Secret Wars (2027)</label
+                Avengers: Secret Wars (Upcoming)</label
               >
             </div>
           </li>
@@ -1554,7 +1653,7 @@
       </div>
       <div class="category">
         <div class="category-header">
-          <h2>Fantastici 4 & Spider-Man Classici</h2>
+          <h2>Spider-Verse (Sony)</h2>
           <label><input type="checkbox" class="check-phase" /></label>
         </div>
         <ul class="movie-list">
@@ -1577,24 +1676,8 @@
           <li>
             <div class="movie-item">
               <label
-                ><input type="checkbox" class="sync-cb" data-key="mf1" /> I
-                Fantastici 4 (2005)</label
-              >
-            </div>
-          </li>
-          <li>
-            <div class="movie-item">
-              <label
                 ><input type="checkbox" class="sync-cb" data-key="m25c" />
                 Spider-Man 3 (2007) - Tobey</label
-              >
-            </div>
-          </li>
-          <li>
-            <div class="movie-item">
-              <label
-                ><input type="checkbox" class="sync-cb" data-key="mf2" /> I
-                Fantastici 4 e Silver Surfer (2007)</label
               >
             </div>
           </li>
@@ -1611,6 +1694,54 @@
               <label
                 ><input type="checkbox" class="sync-cb" data-key="m26b" /> The
                 Amazing Spider-Man 2 (2014) - Andrew</label
+              >
+            </div>
+          </li>
+          <li>
+            <div class="movie-item">
+              <label
+                ><input type="checkbox" class="sync-cb" data-key="svm1" />
+                Spider-Man: Un nuovo universo (2018)</label
+              >
+            </div>
+          </li>
+          <li>
+            <div class="movie-item">
+              <label
+                ><input type="checkbox" class="sync-cb" data-key="svm2" />
+                Spider-Man: Across the Spider-Verse (2023)</label
+              >
+            </div>
+          </li>
+          <li>
+            <div class="movie-item">
+              <label
+                ><input type="checkbox" class="sync-cb" data-key="svm3" />
+                Spider-Man: Beyond the Spider-Verse (Upcoming)</label
+              >
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="category">
+        <div class="category-header">
+          <h2>I Fantastici 4 Classici (Fox)</h2>
+          <label><input type="checkbox" class="check-phase" /></label>
+        </div>
+        <ul class="movie-list">
+          <li>
+            <div class="movie-item">
+              <label
+                ><input type="checkbox" class="sync-cb" data-key="mf1" /> I
+                Fantastici 4 (2005)</label
+              >
+            </div>
+          </li>
+          <li>
+            <div class="movie-item">
+              <label
+                ><input type="checkbox" class="sync-cb" data-key="mf2" /> I
+                Fantastici 4 e Silver Surfer (2007)</label
               >
             </div>
           </li>
@@ -1688,7 +1819,6 @@
       const foxSonyHtml = document.getElementById("fox-sony-data").innerHTML;
 
       document.getElementById("mcu-grid").innerHTML = mcuHtml;
-
       // IL MIRACOLO DELLA CRONOLOGIA: Prima carichiamo X-Men, Sony, Venom, poi attacchiamo l'MCU!
       document.getElementById("universe-grid").innerHTML =
         foxSonyHtml + mcuHtml;
